@@ -1,0 +1,31 @@
+// https://ant.design/docs/react/customize-theme
+@import '~antd/dist/antd.less';
+@import '~hc-materials/lib/index.less';
+
+.g-header-project{
+  float: left;
+  margin-top: 16px;
+  margin-left: 20px;
+  .ant-select-selection {
+    background: transparent;
+    border-color: transparent;
+    color: white;
+    .ant-select-arrow{
+      color: white;
+    }
+  }
+}
+
+.g-sider-item svg{
+  fill: white;
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+  margin-right: 10px;
+  margin-left: 4px;
+}
+.@{sider-collapse-prefix-cls} {
+  .g-sider-item span {
+    display: none;
+  }
+}
