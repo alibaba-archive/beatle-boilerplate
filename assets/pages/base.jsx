@@ -2,19 +2,18 @@ import React, {Fragment} from 'react';
 import PropTypes from 'prop-types';
 import l20n from 'hc-l20n';
 import Beatle from 'beatle';
-import {withRouter} from 'react-router-dom';
-import {Layer, LoadingBar, getLayout, BreadCrumb, Cascader, HocCreator, RouteHelper, Resizer} from 'hc-materials';
+import {Layer, LoadingBar, getLayout, BreadCrumb, Cascader, HocCreator, RouteHelper, Resizer, Modaler} from 'hc-materials';
+import Locale from '../biz/locales';
 import getHeader from '../common/utils/getHeader';
 import getFooter from '../common/utils/getFooter';
 
-class BaseContainer extends React.PureComponent {
+export default class BaseContainer extends React.PureComponent {
   static contextTypes = {
     app: PropTypes.object
   }
 
   static propTypes = {
     children: PropTypes.any,
-    location: PropTypes.any,
     orderKeys: PropTypes.array,
     appRoutes: PropTypes.array,
     subMenus: PropTypes.object,
@@ -39,6 +38,9 @@ class BaseContainer extends React.PureComponent {
   constructor(props, context) {
     super(props, context);
 
+    this.state = {
+      lang: null
+    };
     const {orderKeys, subMenus, getRoutes, children} = props;
 
     this._brand = {
@@ -69,23 +71,39 @@ class BaseContainer extends React.PureComponent {
           }
         },
         Header: {
-          getProps: () => this._childContext && this._childContext.header
+          getProps: () => {
+            if (this._childContext.header === null) {
+              this._childContext.header = getHeader(this._childContext, props.noSider ? this._brand : null, props.parentRoute);
+            }
+            return this._childContext.header;
+          }
         }
       }
     };
+    const route = this.getRoute();
+    const routeOptions = route && route.component && route.component.routeOptions || {};
 
+    this._viewContent = routeOptions.isolated ? props.children : getLayout({
+      layoutOption: this._layoutOption,
+      layout: 'ConsoleLayout',
+      route: route
+    }, props.children);
+
+    const modaler = new Modaler(context);
     this._childContext = {
+      app: context.app,
       l20n: l20n,
       navs: children ? BreadCrumb.parse(children.props.route, subMenus) : [],
       brand: this._brand,
       category: subMenus,
       layer: new Layer(context),
-      routeHelper: new RouteHelper({history: props.history}),
+      routeHelper: new RouteHelper({history: props.history}, {kgId: 1}),
       resizer: new Resizer(),
       cascader: new Cascader(),
-      hocCreator: new HocCreator(),
+      hocCreator: new HocCreator({modaler: modaler}),
+      modaler: modaler,
+      header: null
     };
-    this._childContext.header = getHeader(this._childContext, props.noSider ? this._brand : null, props.parentRoute);
     this._childContext.footer = getFooter(this._childContext);
     Object.keys(this._childContext).forEach(key => {
       if (Array.isArray(this._childContext[key])) {
@@ -120,7 +138,7 @@ class BaseContainer extends React.PureComponent {
   }
 
   getRoute() {
-    const location = this.props.location;
+    const location = this.props.history.location;
     if (this._route && this._route.path === location.pathname) {
       return this._route;
     }
@@ -139,25 +157,18 @@ class BaseContainer extends React.PureComponent {
   }
 
   render() {
-    const viewContent = this.props.children;
-    const route = this.getRoute();
-    const routeOptions = route && route.component && route.component.routeOptions || {};
     return (
-      <Fragment>
-        <LoadingBar
-          style={{position: 'fixed', height: 2, top: 48, zIndex: 999, backgroundColor: '#20C1EA'}}
-          updateTime={100}
-          maxProgress={95}
-          progressIncrease={10}
-        />
-        {routeOptions.isolated ? viewContent : getLayout({
-          layoutOption: this._layoutOption,
-          layout: 'ConsoleLayout',
-          route: route
-        }, viewContent)}
-      </Fragment>
+      <Locale lang={this.state.lang}>
+        <Fragment>
+          <LoadingBar
+            style={{position: 'fixed', height: 2, top: 48, zIndex: 999, backgroundColor: '#20C1EA'}}
+            updateTime={100}
+            maxProgress={95}
+            progressIncrease={10}
+          />
+          {this._viewContent}
+        </Fragment>
+      </Locale>
     );
   }
 }
-
-export default withRouter(BaseContainer);

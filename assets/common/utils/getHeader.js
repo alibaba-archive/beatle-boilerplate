@@ -4,79 +4,26 @@ import getAccount from '../../biz/schemas/getAccount';
 import {Select} from 'antd';
 export default function getHeader(context, brand, parentRoute) {
   const CONFIG = window.CONFIG || {};
-  const RichSelect = context.hocCreator.getRichComponent(Select, {
-    childProps: {
-      className: 'g-header-project'
-    },
-    getResolver: () => {
-      return Promise.resolve([{
-        value: '1',
-        text: '工业知识图谱'
-      }, {
-        value: '2',
-        text: '智能问答'
-      }, {
-        value: '3',
-        text: '语言分析图谱'
-      }]).then(ret => {
-        return {
-          value: '1',
-          children: ret.map(item => (<Select.Option key={item.value}>{item.text}</Select.Option>))
-        };
-      });
-    }
-  });
   return {
     profileProps: {
       search: '',
       nick: CONFIG.nick,
-      avatar: CONFIG.avatar
+      avatar: CONFIG.avatar,
     },
     noSider: true,
     menuProps: {
       brand: brand,
-      prefix: (<RichSelect />),
       menu: {
         mode: 'horizontal'
       },
       route: parentRoute,
-      routes: [
-        {
-          name: 'home',
-          title: '首页',
-          path: '/home'
-        },
-        {
-          name: 'ide',
-          title: '知识图谱开发',
-          path: '/ide'
-        },
-        {
-          name: 'nlp',
-          title: '关系实体抽取',
-          path: '/nlp'
-        },
-        {
-          name: 'semantic',
-          title: '语义问答',
-          path: '/semantic'
-        },
-        {
-          name: 'vision',
-          title: '可视化分析',
-          path: '/vision'
-        },
-        {
-          name: 'maintenance',
-          title: '运维分析',
-          path: '/maintenance'
-        },
-        {
-          name: 'analysis',
-          title: '分析服务',
-          path: '/analysis'
-        }
-      ]
+      routes: context.app.getRoutes().sort((a, b) => {
+        return a.value - b.value;
+      }).slice(1, -4).map(item => ({
+        name: item.name,
+        title: item.title,
+        path: item.resolvePath
+      }))
     },
     onChange: (e) => {
       if (!CONFIG.nick) return;

@@ -2,6 +2,15 @@ import {$m} from 'hc-l20n';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import moment from 'moment';
+import {crud} from 'beatle';
+
+crud.itemsEntry = {
+  pageNum: 1,
+  pageSize: 10,
+  totalNum: 0,
+  data: [],
+  loading: true
+};
 
 import {Layer, converter, bootstrap} from 'hc-materials';
 

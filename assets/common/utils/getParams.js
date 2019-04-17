@@ -1,6 +1,7 @@
-export default function getParams(query, extra) {
-  return Object.assign({
-    page: query.page,
-    pageSize: query.pageSize
-  }, extra);
+import urllib from 'url';
+
+export default function getParams(queryStr, extra) {
+  const query = Object(queryStr) === queryStr ? Object.assign({}, queryStr) : urllib.parse(queryStr, true).query;
+  Object.assign(query, extra);
+  return query;
 }

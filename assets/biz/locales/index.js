@@ -3,7 +3,7 @@ import React, {useState, createContext} from 'react';
 import {IntlProvider, addLocaleData} from 'react-intl';
 import {LocaleProvider} from 'antd';
 import l20n, {L20nProvider} from 'hc-l20n';
-import cookie from '../../common/utils/cookie';
+import {cookie} from 'hc-materials';
 
 const locales = {};
 // only build one language, default by zh_CN

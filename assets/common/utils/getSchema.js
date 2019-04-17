@@ -4,11 +4,7 @@ export default function getSchema(schema, filterType) {
       return schema.filter(filterType);
     } else {
       return schema.filter(item => {
-        if (filterType[item.dataIndex]) {
-          return filterType[item.dataIndex](item);
-        } else {
-          return !item.private;
-        }
+        return Object.keys(filterType).every(k => filterType[k](item[k], item));
       });
     }
   } else if (filterType) {
