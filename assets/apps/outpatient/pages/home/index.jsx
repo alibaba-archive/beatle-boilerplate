@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import BaseContainer from '../base';
+import {BaseContainer} from 'emr-app-common';
 
 export default class Home extends React.PureComponent {
   static propTypes = {

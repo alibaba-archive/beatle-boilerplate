@@ -1,7 +1,18 @@
 # 集成环境
 
-1. webpack v4.x
-2. react v16.x
+### quick start
+
+1. 安装nodejs、npm、yarn
+> npm install -g yarn
+
+2. 启动，默认端口8080
+
+> yarn start
+
+3. 打包，文件放到build目录
+
+> yarn build
+
 
 ### 项目结构
 
@@ -38,6 +49,14 @@ Project
 ├── webpack.env.js
 └── webpack.production.js
 ```
+
+### 前期准备
+
+1. react - 16.x
+2. react-router 5.x
+3. beatle
+4. antd
+
 
 ### css module
 
