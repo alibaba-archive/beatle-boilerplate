@@ -10,7 +10,7 @@ module.exports = {
 
   build: {                    // 构建
     version: '0.0.1',         // 版本号
-    entryDir: 'assets',       // 源码入口
+    entryDir: '.',       // 源码入口
     destDir: 'build',         // 打包目录
     outputDir: 'build/0.0.1', // 源码打包目录
     publicPath: '/'           // 访问地址
@@ -26,7 +26,7 @@ module.exports = {
   autoLoad: {                         // 自动加载
     enabled: false,                   // 是否开启
     specific: true,
-    modelPath: 'workspaces', // 自动加载models文件或者目录
-    routePath: 'workspaces'  // 自动加载routes文件或者目录
+    modelPath: 'assets/workspaces', // 自动加载models文件或者目录
+    routePath: 'assets/workspaces'  // 自动加载routes文件或者目录
   }
 };

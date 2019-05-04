@@ -26,8 +26,8 @@ module.exports = {
   autoLoad: {                       // 自动加载
     enabled: true,                  // 是否开启
     specific: true,
-    destModelPath: 'pages',
-    destRoutePath: 'biz/models',
+    destModelPath: 'biz/models',
+    destRoutePath: 'pages',
     modelPath: './auto_models.js', // 自动加载models文件或者目录
     routePath: './auto_routes.js'   // 自动加载routes文件或者目录
   }

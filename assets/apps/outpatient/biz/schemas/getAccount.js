@@ -1,4 +1,4 @@
-import getSchema from '../../common/utils/getSchema';
+import {getSchema} from 'emr-app-common';
 export default (props, context, filterType) => {
   const schema = [
     {

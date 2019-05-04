@@ -1,6 +1,6 @@
 import React from 'react';
 import getAccount from '../../biz/schemas/getAccount';
-import contextTypes from '../../common/utils/contextTypes';
+import {contextTypes} from 'emr-app-common';
 
 export default {
   layout: {

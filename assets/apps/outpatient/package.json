@@ -1,5 +1,5 @@
 {
-  "name": "emr-starter-kit",
+  "name": "emr-app-outpatient",
   "version": "0.0.1",
   "author": "",
   "description": "",
@@ -32,12 +32,6 @@
   "readmeFilename": "README.md",
   "scripts": {
     "lint": "eslint ./assets",
-    "outpatient-add": "git substree add --prefix=assets/apps/outpatient git地址 master --squash",
-    "outpatient-pull": "git substree pull --prefix=assets/apps/outpatient git地址 master --squash",
-    "outpatient-push": "git substree push --prefix=assets/apps/outpatient git地址 master --squash",
-
-    "outpatient-start": "export BASE_PATH='assets/apps/outpatient' && node node_modules/.bin/webpack-dev-server --config node_modules/emr-app-common/etc/webpack.development.js --open",
-    "outpatient-stage": "export BASE_PATH='assets/apps/outpatient' && node node_modules/.bin/webpack --config node_modules/emr-app-common/etc/webpack.production.js",
     "start": "node ./node_modules/.bin/webpack-dev-server --config node_modules/emr-app-common/etc/webpack.development.js --open",
     "stage": "node ./node_modules/.bin/webpack --config node_modules/emr-app-common/etc/webpack.production.js"
   },
